@@ -3,13 +3,13 @@
 #include <string.h>
 #include <time.h>
 
-void convertir_decimal_a_binario(int num) {
+void decimal_a_binario(int num) {
     if (num < 0) {
-        printf("¡Error! Debe ser un número positivo.\n");
+        printf("Valor no valido. Debes ingresar un número positivo.\n");
         return;
     }
 
-    printf("El número en binario es: ");
+    printf("El número decimal convertido a binario es: ");
     for (int i = 7; i >= 0; i--) {
         int bit = (num >> i) & 1;  // Obtener el bit en la posición i
         printf("%d", bit);
@@ -17,13 +17,13 @@ void convertir_decimal_a_binario(int num) {
     printf("\n");
 }
 
-int convertir_binario_a_decimal(const char* binario) {
+int binario_a_decimal(const char* binario) {
     int decimal = 0;
     int longitud = strlen(binario);
 
     // Validar que el binario tenga 8 caracteres
     if (longitud != 8) {
-        printf("¡Error! El número binario debe ser de 8 bits.\n");
+        printf("Valor no valido. El número binario que ingreses debe ser de 8 bits.\n");
         return -1;
     }
 
@@ -31,7 +31,7 @@ int convertir_binario_a_decimal(const char* binario) {
         if (binario[i] == '1') {
             decimal += (1 << (7 - i));  // Sumar el valor correspondiente al bit en la posición i
         } else if (binario[i] != '0') {
-            printf("¡Error! El valor binario debe contener solo '1' o '0'.\n");
+            printf("¡Ocurrio un error! El valor binario debe contener solo '1' o '0'.\n");
             return -1;
         }
     }
@@ -39,8 +39,8 @@ int convertir_binario_a_decimal(const char* binario) {
     return decimal;
 }
 
-int generar_numero_aleatorio() {
-    // Generar un número aleatorio entre 10 y 50
+int numero_aleatorio() {
+    // Número aleatorio entre 10 y 50
     return rand() % 41 + 10;
 }
 
@@ -48,8 +48,8 @@ int main() {
     srand(time(NULL));  // Inicializar la semilla para la generación de números aleatorios
 
     int opcion;
-    int numero_decimal;
-    char numero_binario[9];  // Cadena de 8 bits más el carácter nulo
+    int numDecimal;
+    char numBinario[9];  // Cadena de 8 bits más el carácter nulo a conveniencia
     int resultado_decimal;
 
     while (1) {
@@ -64,38 +64,35 @@ int main() {
 
         switch (opcion) {
             case 1:
-                // Convertir decimal a binario
                 printf("Ingrese un número decimal: ");
-                scanf("%d", &numero_decimal);
-                convertir_decimal_a_binario(numero_decimal);
+                scanf("%d", &numDecimal);
+        
+                decimal_a_binario(numDecimal);
                 break;
 
             case 2:
-                // Convertir binario a decimal
                 printf("Ingrese un número binario de 8 bits: ");
-                scanf("%s", numero_binario);  // Leer la cadena de 8 bits
-                resultado_decimal = convertir_binario_a_decimal(numero_binario);
+                scanf("%s", numBinario);  // Leer la cadena de 8 bits
+                resultado_decimal = binario_a_decimal(numBinario);
                 if (resultado_decimal != -1) {
-                    printf("El número en decimal es: %d\n", resultado_decimal);
+                    printf("El número binario convertido a decimal es: %d\n", resultado_decimal);
                 }
                 break;
 
             case 3:
-                // Generar un número aleatorio entre 10 y 50
-                numero_decimal = generar_numero_aleatorio();
-                printf("El número aleatorio en decimal es: %d\n", numero_decimal);
+                numDecimal = numero_aleatorio();
+                printf("El número aleatorio es: %d\n", numDecimal);
 
                 // Mostrar el número aleatorio en binario
-                convertir_decimal_a_binario(numero_decimal);
+                decimal_a_binario(numDecimal);
                 break;
 
             case 4:
-                // Salir
-                printf("Saliendo del programa...\n");
+                printf("Programa finalizado.\n");
                 return 0;
 
             default:
-                printf("¡Error! Opción no válida. Intente nuevamente.\n");
+                printf("La opción ingresada no es valida. Intente nuevamente.\n");
                 break;
         }
     }
